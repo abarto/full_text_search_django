@@ -1,3 +1,11 @@
 from django.db import models
 
-# Create your models here.
+
+class Item(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField(max_length=2000)
+
+
+class Part(models.Model):
+    item = models.ForeignKey('items.Item', related_name='parts')
+    name = models.CharField(max_length=200)
