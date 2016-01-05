@@ -16,7 +16,11 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", inline: <<-SHELL
     apt-get update
-    apt-get install -y python3 python3-dev python3.4-venv
+    apt-get install -y python3 python3-dev python3.4-venv postgresql postgresql-server-dev-all
+
+    sudo -u postgres psql --command="CREATE USER full_text_search_django WITH PASSWORD 'full_text_search_django';"
+    sudo -u postgres psql --command="CREATE DATABASE full_text_search_django WITH OWNER full_text_search_django;"
+    sudo -u postgres psql --command="GRANT ALL PRIVILEGES ON DATABASE full_text_search_django TO full_text_search_django;"
   SHELL
 
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
