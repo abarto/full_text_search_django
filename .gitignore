@@ -1,0 +1,7 @@
+db.sqlite3
+.idea
+__pycache__
+*.pyc
+full_text_search_django_venv/
+.vagrant
+static/
