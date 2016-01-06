@@ -15,8 +15,15 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.provision "shell", inline: <<-SHELL
+    export DEBIAN_FRONTEND=noninteractive
+
     apt-get update
-    apt-get install -y python3 python3-dev python3.4-venv
+    debconf-set-selections <<< 'mysql-server mysql-server/root_password password fts_django'
+    debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password fts_django'
+    apt-get install -y python3 python3-dev python3.4-venv mysql-server libmysqlclient-dev
+    /usr/bin/mysql --user=root --password=fts_django --execute='CREATE DATABASE full_text_search_django;'
+    /usr/bin/mysql --user=root --password=fts_django --execute="CREATE USER 'fts_django'@'localhost' IDENTIFIED BY 'fts_django';"
+    /usr/bin/mysql --user=root --password=fts_django --execute="GRANT ALL ON full_text_search_django.* to 'fts_django'@'localhost';"
   SHELL
 
   config.vm.provision "shell", privileged: false, inline: <<-SHELL
