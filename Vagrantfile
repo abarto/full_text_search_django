@@ -4,6 +4,9 @@
 Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty64"
 
+  config.vm.define "full-text-search-django-mysql-vm" do |vm_define|
+  end
+
   config.vm.hostname = "django-full-text-search-django.local"
 
   config.vm.network "forwarded_port", guest: 8000, host: 8000
