@@ -11,6 +11,9 @@ class ItemQueryset(models.QuerySet):
             order_by=('-rank',)
         )
 
+    def text_search_part_name(self, name):
+        return self.filter(parts__id__in=Part.objects.text_search_name(name))
+
 
 class PartQueryset(models.QuerySet):
     def text_search_name(self, name):
