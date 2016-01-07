@@ -12,6 +12,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "1024"
+    vb.name = "full-text-search-django-postgresql-vm"
   end
 
   config.vm.provision "shell", inline: <<-SHELL
