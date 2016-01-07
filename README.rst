@@ -250,7 +250,7 @@ As you can see, the solution is pretty much identical in both cases, which sugge
 The code
 --------
 
-You can get the for both solutions on `GitHub <https://github.com/abarto/v>`_. The code for each solution is on its own branch:
+You can get the code for both solutions on `GitHub <https://github.com/abarto/v>`_. The code for each solution is on its own branch:
 
 * `PostgreSQL <https://github.com/abarto/full_text_search_django/tree/full-text-search-postgresql>`_
 * `MySQL <https://github.com/abarto/full_text_search_django/tree/full-text-search-mysql>`_
