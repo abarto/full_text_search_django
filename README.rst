@@ -75,9 +75,9 @@ We're creating two indexes here: one for the ``Item``'s name and one for the ``P
     class ItemQueryset(models.QuerySet):
         def text_search_name(self, name):
             return self.extra(
-                select={'rank': "ts_rank_cd(to_tsvector('english', name), to_tsquery(%s), 32)"},
+                select={'rank': "ts_rank_cd(to_tsvector('english', name), plainto_tsquery(%s), 32)"},
                 select_params=(name,),
-                where=("to_tsvector('english', name) @@ to_tsquery(%s)",),
+                where=("to_tsvector('english', name) @@ plainto_tsquery(%s)",),
                 params=(name,),
                 order_by=('-rank',)
             )
@@ -89,18 +89,18 @@ We're creating two indexes here: one for the ``Item``'s name and one for the ``P
     class PartQueryset(models.QuerySet):
         def text_search_name(self, name):
             return self.extra(
-                select={'rank': "ts_rank_cd(to_tsvector('english', name), to_tsquery(%s), 32)"},
+                select={'rank': "ts_rank_cd(to_tsvector('english', name), plainto_tsquery(%s), 32)"},
                 select_params=(name,),
-                where=("to_tsvector('english', name) @@ to_tsquery(%s)",),
+                where=("to_tsvector('english', name) @@ plainto_tsquery(%s)",),
                 params=(name,),
                 order_by=('-rank',)
             )
 
         def text_search_item_name(self, name):
             return self.select_related().extra(
-                select={'rank': "ts_rank_cd(to_tsvector('english', items_item.name), to_tsquery(%s), 32)"},
+                select={'rank': "ts_rank_cd(to_tsvector('english', items_item.name), plainto_tsquery(%s), 32)"},
                 select_params=(name,),
-                where=("to_tsvector('english', items_item.name) @@ to_tsquery(%s)",),
+                where=("to_tsvector('english', items_item.name) @@ plainto_tsquery(%s)",),
                 params=(name,),
                 order_by=('-rank',)
             )
@@ -250,7 +250,7 @@ As you can see, the solution is pretty much identical in both cases, which sugge
 The code
 --------
 
-You can get the code for both solutions on `GitHub <https://github.com/abarto/v>`_. The code for each solution is on its own branch:
+You can get the code for both solutions on `GitHub <https://github.com/abarto/full_text_search_django>`_. The code for each solution is on its own branch:
 
 * `PostgreSQL <https://github.com/abarto/full_text_search_django/tree/full-text-search-postgresql>`_
 * `MySQL <https://github.com/abarto/full_text_search_django/tree/full-text-search-mysql>`_
