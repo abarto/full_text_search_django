@@ -13,11 +13,11 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunSQL(
-            "CREATE INDEX items_item_name_ts_idx ON items_item USING gin(to_tsvector('english', name));"
+            "CREATE INDEX items_item_name_ts_idx ON items_item USING gin(to_tsvector('english', name));",
             "DROP INDEX IF EXISTS items_item_name_ts_idx;"
         ),
         migrations.RunSQL(
-            "CREATE INDEX items_part_name_ts_idx ON items_part USING gin(to_tsvector('english', name));"
+            "CREATE INDEX items_part_name_ts_idx ON items_part USING gin(to_tsvector('english', name));",
             "DROP INDEX IF EXISTS items_part_name_ts_idx;"
         ),
     ]
