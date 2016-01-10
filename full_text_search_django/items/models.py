@@ -4,9 +4,9 @@ from django.db import models
 class ItemQueryset(models.QuerySet):
     def text_search_name(self, name):
         return self.extra(
-            select={'rank': "ts_rank_cd(to_tsvector('english', name), to_tsquery(%s), 32)"},
+            select={'rank': "ts_rank_cd(to_tsvector('english', name), plainto_tsquery(%s), 32)"},
             select_params=(name,),
-            where=("to_tsvector('english', name) @@ to_tsquery(%s)",),
+            where=("to_tsvector('english', name) @@ plainto_tsquery(%s)",),
             params=(name,),
             order_by=('-rank',)
         )
@@ -18,18 +18,18 @@ class ItemQueryset(models.QuerySet):
 class PartQueryset(models.QuerySet):
     def text_search_name(self, name):
         return self.extra(
-            select={'rank': "ts_rank_cd(to_tsvector('english', name), to_tsquery(%s), 32)"},
+            select={'rank': "ts_rank_cd(to_tsvector('english', name), plainto_tsquery(%s), 32)"},
             select_params=(name,),
-            where=("to_tsvector('english', name) @@ to_tsquery(%s)",),
+            where=("to_tsvector('english', name) @@ plainto_tsquery(%s)",),
             params=(name,),
             order_by=('-rank',)
         )
 
     def text_search_item_name(self, name):
         return self.select_related().extra(
-            select={'rank': "ts_rank_cd(to_tsvector('english', items_item.name), to_tsquery(%s), 32)"},
+            select={'rank': "ts_rank_cd(to_tsvector('english', items_item.name), plainto_tsquery(%s), 32)"},
             select_params=(name,),
-            where=("to_tsvector('english', items_item.name) @@ to_tsquery(%s)",),
+            where=("to_tsvector('english', items_item.name) @@ plainto_tsquery(%s)",),
             params=(name,),
             order_by=('-rank',)
         )
